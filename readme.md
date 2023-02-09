@@ -9,8 +9,8 @@ add ```start redemrp_discord_rich_presence``` in your ```server.cfg```
 You will need to adapt this resource for your informations, here has the information of what function does what.
 
 Attempt | 
----     | 
-Seconds | 301 
+---     | --- |
+Seconds | 301 |
 
 
 # Credits
