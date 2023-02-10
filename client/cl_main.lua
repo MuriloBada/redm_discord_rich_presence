@@ -13,7 +13,7 @@ local function UpdateRichPresence(Player)
             -- This is the Application ID (Replace this with you own)
             SetDiscordAppId(YourApplicationIDHere)
             
-            SetRichPresence('Input your phrase here!\n'..'('..Player.source..') - '..PlayerName) -- This will take the player name and the source and the current amount of online players
+            SetRichPresence('Input your phrase here!\n'..'('..Player.source..') - '..PlayerName) -- This will take the player name and the source
             
             -- Here you will have to put the image name for the "large" icon.
             -- You can create one by go to Rich Presence/Art Assets tab in your application and  click Add Image(s)
@@ -35,7 +35,7 @@ local function UpdateRichPresence(Player)
 
             --[[ 
                 Here you can add buttons that will display in your Discord Status,
-                First paramater is the button index (0 or 1), second is the title and 
+                First paramater is the button index (0 or 1 or more), second is the title and 
                 last is the url (this has to start with "fivem://connect/" or "https://") 
             ]]--
             SetDiscordRichPresenceAction(0, "Connect", "fivem://connect/YourIpHere")
