@@ -1,10 +1,16 @@
--- Server Side
+RedEM = exports["redem_roleplay"]:RedEM()
+
 AddEventHandler('redemrp:playerLoaded', function()
-    TriggerClientEvent('discordRichPresenceSetNumPlayers', -1, GetNumPlayerIndices())
+    startRichPresence()
 end)
 
--- Re-send num players on resource (re)start.
-CreateThread(function()
-    Citizen.Wait(2000)
-    TriggerClientEvent('discordRichPresenceSetNumPlayers', -1, GetNumPlayerIndices())
+RegisterNetEvent('startRichpresence', function()
+    startRichPresence()
 end)
+
+function startRichPresence()
+    local Player = RedEM.GetPlayer(source)
+    if Player then
+        TriggerClientEvent('discordRichPresenceSetNumPlayers', Player.source, GetPlayers(), Player)
+    end
+end

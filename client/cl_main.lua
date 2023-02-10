@@ -1,23 +1,20 @@
-RedEM = exports["redem_roleplay"]:RedEM()
 local gNumPlayers = 1
 
 local gLastRichPresenceUpdateTime
 
-local function UpdateRichPresence(source)
-    local Player = RedEM.GetPlayer(source) 
+local function UpdateRichPresence(Player)
     if Player then
         local PlayerName = Player.firstname..' '..Player.lastname
         local gameTimer = GetGameTimer()
 
-        if not gLastRichPresenceUpdateTime or gameTimer - gLastRichPresenceUpdateTime >= 30000 then
-
+        print(PlayerName)
+        if not gLastRichPresenceUpdateTime or gameTimer - gLastRichPresenceUpdateTime >= 2 then
             gLastRichPresenceUpdateTime = gameTimer
-
             -- This is the Application ID (Replace this with you own)
-            SetDiscordAppId(966363661167911012)
-            -- SetDiscordAppId(YourApplicationIDHere)
+            SetDiscordAppId(YourApplicationIDHere)
             
-            SetRichPresence(PlayerName.." ["..source.."]\nRedM Server "..gNumPlayers..'/128') -- This will take the player name and the source and the current amount of online players
+            -- SetRichPresence('('..Player.source..') - '..PlayerName) -- This will take the player name and the source and the current amount of online players
+            SetRichPresence('Se divertindo no velho oeste!\n'..'('..Player.source..') - '..PlayerName) -- This will take the player name and the source and the current amount of online players
             
             -- Here you will have to put the image name for the "large" icon.
             -- You can create one by go to Rich Presence/Art Assets tab in your application and  click Add Image(s)
@@ -43,7 +40,8 @@ local function UpdateRichPresence(source)
                 First paramater is the button index (0 or 1), second is the title and 
                 last is the url (this has to start with "fivem://connect/" or "https://") 
             ]]--
-            SetDiscordRichPresenceAction(0, "Join", "fivem://connect/YourIpHere")
+            SetDiscordRichPresenceAction(0, "Discord", "fivem://connect/YourIpHere")
+            SetDiscordRichPresenceAction(1, "Jogar ("..#gNumPlayers.."/128)", "fivem://connect/YourIpHere")
 
             --You can add more Natives Here vvv
             --SetDiscordRichPresenceAction(1, "Example", "https://example.com")
@@ -53,14 +51,20 @@ end
 
 CreateThread(function()
     while true do
-        Wait(60000)
+        Wait(10000)
         UpdateRichPresence()
     end
 end)
 
-RegisterNetEvent('discordRichPresenceSetNumPlayers', function(numPlayers)
+AddEventHandler('onResourceStart', function(resourceName)
+    if resourceName == GetCurrentResourceName() then
+        TriggerServerEvent('startRichpresence')
+    end
+end)
+
+RegisterNetEvent('discordRichPresenceSetNumPlayers', function(numPlayers, Player)
     local _source = source
     gNumPlayers = numPlayers
 
-    UpdateRichPresence(_source)
+    UpdateRichPresence(Player)
 end)
